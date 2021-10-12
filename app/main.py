@@ -10,6 +10,10 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSION
 
+@app.route('/')
+def index():
+    return '<h1>Hello, World!</h1>'
+
 @app.route('/predict/', methods = ['POST', 'GET'])
 def predict():
     if request.method == 'POST':
