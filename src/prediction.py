@@ -1,11 +1,16 @@
+import io
+import os, sys
+import pickle
+
+from PIL import Image
 import torchvision.models as models
 import torch
-import pickle
-from PIL import Image
 import torchvision.transforms as transforms 
-import io
 
-with open('./id2class.pkl', 'rb') as f:
+
+pathname = os.path.dirname(sys.argv[0]) #Folder of py file being run
+path = os.path.abspath(pathname) #Absolute Path of the the file
+with open(os.path.join(path, 'id2class.pkl'), 'rb') as f:
     id2class = pickle.load(f)
 
 model = models.mobilenet_v3_small()
