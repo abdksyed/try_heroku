@@ -9,9 +9,9 @@ with open('./id2class.pkl', 'rb') as f:
     id2class = pickle.load(f)
 
 model = models.mobilenet_v3_small()
-# checkpoint = 'https://drive.google.com/u/0/uc?id=1A2ML5IpdYkTX88O--Jd0KnKC93ys2o0Z&export=download'
-# model.load_state_dict(torch.hub.load_state_dict_from_url(checkpoint, progress=False))
-model.load_state_dict(torch.load('./weights/mobilenet_v3_small-047dcff4.pth'))
+checkpoint = 'https://drive.google.com/u/0/uc?id=1A2ML5IpdYkTX88O--Jd0KnKC93ys2o0Z&export=download'
+model.load_state_dict(torch.hub.load_state_dict_from_url(checkpoint, progress=False))
+# model.load_state_dict(torch.load('./weights/mobilenet_v3_small-047dcff4.pth')) # In Local
 model.eval()
 
 transform = transforms.Compose([transforms.Resize((224,224)),
