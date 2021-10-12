@@ -8,9 +8,7 @@ import torch
 import torchvision.transforms as transforms 
 
 
-pathname = os.path.dirname(sys.argv[0]) #Folder of py file being run
-path = os.path.abspath(pathname) #Absolute Path of the the file
-with open(os.path.join(path, 'id2class.pkl'), 'rb') as f:
+with open('./app/utils/id2class.pkl', 'rb') as f:
     id2class = pickle.load(f)
 
 model = models.mobilenet_v3_small()

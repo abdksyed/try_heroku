@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from src.prediction import get_top5
+from app.utils.prediction import get_top5
 
 
 app = Flask(__name__)
@@ -26,6 +26,3 @@ def predict():
             return jsonify(data)
         except:
             return jsonify({'error': 'Error in prediction'})
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
