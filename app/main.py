@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request, render_template
+import io, base64
+
 from app.utils.prediction import get_top5
 
 
@@ -33,6 +35,9 @@ def predict():
 
         try:
             result = get_top5(img_bytes)
-            return render_template('inference.html', result = result)
-        except:
+            data = io.BytesIO(img_bytes[0])
+            encoded_img_data = base64.b64encode(data.getvalue())
+            return render_template('inference.html', result = result, img_data=encoded_img_data.decode('utf-8'))
+        except Exception as e:
+            print(e)
             return jsonify({'error': 'Error in prediction'})

@@ -3,7 +3,11 @@
 {% block content %}
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <p class="lead">File uploaded successfully. You have uploaded an image of</p>
+    <p class="lead">File uploaded successfully.</p>
+    <img src="data:image/png;base64,{{ img_data }}" class="img-thumbnail" alt="Responsive image">
+    <p> </p>
+    <p> </p>
+    <p>The TOP 5 predictions for your Image is:</p>
     {% for key, value in result.items() %}
         <table border = 1 class = "table">
             <thread class = "thread-dark">
