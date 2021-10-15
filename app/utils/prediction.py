@@ -36,6 +36,6 @@ def get_top5(image_bytes):
     result = {}
     
     for idx, (val, ind) in enumerate(zip(out_val, out_ind)):
-        result[idx] = [(id2class[i.item()].split(',')[0], v.item()*100) for i, v in zip(ind, val)]       
+        result[idx] = [( id2class[i.item()].split(',')[0], f'{v.item()*100:.2f}%' ) for i, v in zip(ind, val) if v.item() > 0.01]
 
     return result
