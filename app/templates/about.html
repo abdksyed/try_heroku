@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="px-3 py-3 text-center">
+            <h1 class="display-4">About this project</h1>
+            <div class="my-2">
+                <img style="max-width: 600px; width: 100%;" src="{{ url_for('static', filename='img/flask+pytorch.png') }}" alt="">
+            </div>
+            <p class="lead">Dating Flask: Web-App for Classification of Images in 1000 ImageNet Classes through Mobile Net V3 <br> <a
+                    href="https://github.com/abdksyed/try_heroku"> View on GitHub</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

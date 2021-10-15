@@ -23,11 +23,19 @@ transform = transforms.Compose([transforms.Resize((224,224)),
                                 ])
 
 def get_top5(image_bytes):
-    img = Image.open(io.BytesIO(image_bytes))
+    trans_imgs = []
+    for image_byt in image_bytes:
+        img = Image.open(io.BytesIO(image_byt))
+        trans_imgs.append(transform(img))
+    batch = torch.stack(trans_imgs, dim=0)
     with torch.no_grad():
-        out = model(transform(img).unsqueeze(0)).softmax(dim=-1)  
-    out = out.topk(5)
-    prob, idx = (out.values[0])*100, out.indices[0]
-    classes = [id2class[i] for i in idx.tolist()]
+        out = model(batch).softmax(dim=-1)  
+    
+    out = torch.topk(out, k=5, dim=-1)
+    out_val, out_ind = out.values, out.indices
+    result = {}
+    
+    for idx, (val, ind) in enumerate(zip(out_val, out_ind)):
+        result[idx] = [(id2class[i.item()].split(',')[0], v.item()*100) for i, v in zip(ind, val)]       
 
-    return prob.tolist(), classes
+    return result

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from app.utils.prediction import get_top5
 
 
@@ -12,21 +12,27 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return '<h1>Hello, World!</h1>'
+    return render_template('index.html')
 
-@app.route('/predict/', methods = ['POST', 'GET'])
+@app.route('/about')
+def about():
+    return render_template('about.html')
+    
+@app.route('/infer', methods = ['POST', 'GET'])
 def predict():
     if request.method == 'POST':
-        file = request.files.get('file')
-        if file is None or file.filename == "":
-            return jsonify({'error': 'No file selected'})
-        if not allowed_file(file.filename):
-            return jsonify({'error': 'File extension not allowed'})
+        img_bytes = []
+        for key in request.files.keys():
+            file = request.files.get(key)
+            if file is None or file.filename == "":
+                return jsonify({'error': 'No file selected'})
+            if not allowed_file(file.filename):
+                return jsonify({'error': 'File extension not allowed'})
+            
+            img_bytes.append(file.read())
 
         try:
-            img_bytes = file.read()
-            top5_per, top5_classes = get_top5(img_bytes)
-            data = {'classes': top5_classes, 'percentages': top5_per}
-            return jsonify(data)
+            result = get_top5(img_bytes)
+            return render_template('inference.html', result = result)
         except:
             return jsonify({'error': 'Error in prediction'})
