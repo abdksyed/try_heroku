@@ -36,6 +36,7 @@ def get_top5(image_bytes):
     result = {}
     
     for idx, (val, ind) in enumerate(zip(out_val, out_ind)):
+        # Give top 5* predictions, with percentage. *Only if probability is above 1%.
         result[idx] = [( id2class[i.item()].split(',')[0], f'{v.item()*100:.2f}%' ) for i, v in zip(ind, val) if v.item() > 0.01]
 
     return result
